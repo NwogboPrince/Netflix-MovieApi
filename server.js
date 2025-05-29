@@ -21,7 +21,7 @@ const limiter = rateLimit({
 app.use(limiter);
 
 // Serve static files (HTML, CSS, JS, images)
-app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // SECURITY: Content Security Policy header
 app.use((req, res, next) => {
