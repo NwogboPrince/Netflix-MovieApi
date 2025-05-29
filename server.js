@@ -8,7 +8,10 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // SECURITY: Store your API key in an environment variable, not in code
-const TMDB_API_KEY = process.env.TMDB_API_KEY || '1e3fe8ce8c1dd0fe37a6612eaacd7b48';
+const TMDB_API_KEY = process.env.TMDB_API_KEY;
+if (!TMDB_API_KEY) {
+  throw new Error('TMDB_API_KEY environment variable is not set.');
+}
 
 // SECURITY: Rate limiting to prevent abuse
 const limiter = rateLimit({
