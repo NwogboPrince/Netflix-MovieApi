@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notion A.I</title>
+    <link rel="stylesheet" href="./movie.css">
+</head>
+<body>
+     <header class="showcase">
+        <div class="showcase-top">
+            <img src="./IMAGE/logo.png" alt="NETFLIX png" style="height: 50px; width: auto;" />
+            <a href="#" class="btn btn-rounded" style="float: right; margin-top: 10px;">Sign In</a>
+        </div>
+<!-- Add this where you want the movies to appear -->
+<section id="movie-preview">
+  <h2>Trending Movies</h2>
+  <div id="movies-list"></div>
+</section>
+<script>
+const container = document.getElementById('movies-list');
+container.innerHTML = '<p>Loading movies...</p>';
+
+fetch('/api/movies')
+  .then(res => res.json())
+  .then(movies => {
+    if (!Array.isArray(movies) || movies.length === 0) {
+      container.innerHTML = '<p>No movies found.</p>';
+      return;
+    }
+    container.innerHTML = movies.map(movie => `
+      <div class="movie-card">
+        <img src="https://image.tmdb.org/t/p/w300${movie.poster_path || ''}" 
+             alt="${movie.title}" 
+             onerror="this.onerror=null;this.src='default-movie.png';">
+        <h3>${movie.title}</h3>
+        <p>${movie.overview}</p>
+      </div>
+    `).join('');
+  })
+  .catch(() => {
+    container.innerHTML = '<p>Failed to load movies. Please try again later.</p>';
+  });
+</script>
+</body>
+</html>
