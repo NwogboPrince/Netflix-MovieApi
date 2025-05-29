@@ -49,8 +49,6 @@ app.use((req, res) => {
   res.status(404).send('404 Not Found');
 });
 
-console.log('TMDB_API_KEY:', TMDB_API_KEY);
-
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
